@@ -8,6 +8,7 @@ class Init {
 
     private $controllerName;
     private $controller;
+    private $parameters;
 
     public function start(){
         $this->loadFiles();
@@ -55,6 +56,7 @@ class Init {
         $destiny = filter_var(rtrim(isset($_GET['destiny']) ? $_GET['destiny'] : null, "/"), FILTER_SANITIZE_URL);
         $destiny = explode('/', ucwords($destiny));
         $endpoint = str_replace("/","", $destiny[0]);
+        $this->parameters = $destiny;
         $this->controllerName = !empty($endpoint) ? "APIRest\\controllers\\".$destiny[0]."Controller" : null;
     
     }
@@ -63,9 +65,15 @@ class Init {
         if(!empty($this->controllerName)){
             if(class_exists($this->controllerName)){
                 $this->controller = new $this->controllerName;
-                if(method_exists($this->controller, "start")){
+                if(count($this->parameters) == 1){
+                    if(method_exists($this->controller, "start")){
+                        $this->controller->start();
+                    }
+                } else {
+                    $this->controller->parameters = $this->parameters;
                     $this->controller->start();
                 }
+                
             } else {
                 Util::JSONResponse(Util::encodeResponse(404, [], "Endpoint requerido no existe"));
                 exit;

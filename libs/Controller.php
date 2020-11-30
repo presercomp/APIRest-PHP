@@ -6,7 +6,8 @@ namespace APIRest\libs;
 class Controller
 {
     protected $HTTPMethod;
-    protected $model; 
+    protected $model;
+    public $parameters; 
 
     public function __construct(){
         if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS'){

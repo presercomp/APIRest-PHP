@@ -22,9 +22,10 @@ class BoletaController extends Controller {
 
     public function start(){
         $this->isAllow(array("GET", "POST"));
+        $arguments = count($this->parameters) > 0 ? $this->parameters : [];
         switch($this->HTTPMethod) {
             case "GET":
-                $result = $this->model->get();
+                $result = $this->model->get($arguments);
                 Util::JSONResponse(Util::encodeResponse(200, $result));
             break;
             case "POST": 
