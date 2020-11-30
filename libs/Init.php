@@ -2,6 +2,8 @@
 
 namespace APIRest\libs;
 
+use APIRest\libs\Utils as Util;
+
 class Init {
 
     private $controllerName;
@@ -52,7 +54,8 @@ class Init {
     private function getParameters(){
         $destiny = filter_var(rtrim(isset($_GET['destiny']) ? $_GET['destiny'] : null, "/"), FILTER_SANITIZE_URL);
         $destiny = explode('/', ucwords($destiny));
-        $this->controllerName = "APIRest\\controllers\\".$destiny[0]."Controller";
+        $endpoint = str_replace("/","", $destiny[0]);
+        $this->controllerName = !empty($endpoint) ? "APIRest\\controllers\\".$destiny[0]."Controller" : null;
     
     }
     
@@ -60,10 +63,15 @@ class Init {
         if(!empty($this->controllerName)){
             if(class_exists($this->controllerName)){
                 $this->controller = new $this->controllerName;
+                if(method_exists($this->controller, "start")){
+                    $this->controller->start();
+                }
             } else {
-                //echo "Controlador {$this->controllerName} no existe";
+                Util::JSONResponse(Util::encodeResponse(404, [], "Endpoint requerido no existe"));
                 exit;
             }
+        } else {
+            echo "Bienvenido. El API Rest está en funcionamiento";
         }
     }
 }

@@ -34,6 +34,8 @@ class MySQL{
             } catch(\PDOException $X_x){
                 $this->errors = $X_x->getMessage();
             }
+            $result = $sth->fetchAll(PDO::FETCH_ASSOC);
         }
+        return $result;
     }
 }
