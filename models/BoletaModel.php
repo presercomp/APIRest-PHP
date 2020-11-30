@@ -14,7 +14,7 @@ class BoletaModel extends Model{
     public function get(array $params = [], array $options = []){
         $result = array();
         switch(count($params)){
-            case 1:
+            case 0:
                 $sql = "SELECT * FROM boleta;";
                 $result = $this->db->execute($sql);
             break;

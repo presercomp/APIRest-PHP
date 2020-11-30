@@ -21,6 +21,7 @@ class Controller
             header("Access-Control-Allow-Origin: *");
             $this->HTTPMethod = $_SERVER['REQUEST_METHOD'];
         }
+        $this->parameters = array();
     }
 
     public function isAllow(array $types){

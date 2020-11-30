@@ -70,7 +70,7 @@ class Init {
                         $this->controller->start();
                     }
                 } else {
-                    $this->controller->parameters = $this->parameters;
+                    $this->controller->parameters = count($this->parameters) > 0 ? $this->parameters : array();
                     $this->controller->start();
                 }
                 
