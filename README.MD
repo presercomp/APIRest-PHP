@@ -7,10 +7,43 @@ Desarrollar una Interfaz de Programación de Aplicaciones, con la finalidad de u
 - Servidor web local para producción (XAMPP, WAMPP, APPSERV, o el de su preferencia que incluya motor de base datos MySQL/MariaDB)
   
 ## Endpoints a generar
-- /boleta
-- /dispositivo
-- /usuario
-- /empresa
+- /boleta            [GET / POST / PUT / PATCH]
+- /boleta/:id        [GET]
+- /dispositivo       [GET / POST / PUT / PATCH]
+- /dispositivo/:id   [GET]
+- /usuario           [GET / POST / PUT / PATCH]
+- /usuario           [GET]
+- /ingreso           [POST]
+
+### /boleta
+GET   : Lista todas las boletas existentes
+POST  : Registra una nueva boleta
+PUT   : Cambia todos los valores del registro
+PATCH : Cambia el valor de un elemento del registro
+
+### /boleta/:id
+GET   : Muestra solo la información del :id solicitado
+
+### /dispositivo
+GET   : Lista todos los dispositivos existentes
+POST  : Registra una nuevo dispositivo
+PUT   : Cambia todos los valores del registro
+PATCH : Cambia el valor de un elemento del registro
+
+### /dispositivo/:id
+GET   : Muestra solo la información del :id solicitado
+
+### /usuario
+GET   : Lista todos los usuarios existentes
+POST  : Registra una nuevo usuario
+PUT   : Cambia todos los valores del registro
+PATCH : Cambia el valor de un elemento del registro
+
+### /usuario/:id
+GET   : Muestra solo la información del :id solicitado
+
+### /ingreso
+POST  : Valida si la credencial existe en su par usuario/clave
 
 ## Links de utilidad
 - https://json.org/example.html

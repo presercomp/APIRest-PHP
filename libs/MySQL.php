@@ -27,7 +27,8 @@ class MySQL{
     }
 
     public function execute(string $sql){
-        $result = array();
+        $result = null;
+        $isInsert = strtolower(substr($sql, 0, 6)) == "insert";
         if($this->connected){
             $sth = $this->pdo->prepare($sql);
             try {
@@ -37,7 +38,16 @@ class MySQL{
                 $this->errors = $X_x->getMessage();
                 $this->rows = 0;
             }
-            $result = $sth->fetchAll(PDO::FETCH_ASSOC);
+            if(strlen($this->errors) > 0){
+                $result = $this->errors;
+            } else {
+                if($isInsert){
+                    $result = $this->pdo->lastInsertId() > 0 ? $this->pdo->lastInsertId() : 0;
+                } else {
+                    $result = $sth->fetchAll(PDO::FETCH_ASSOC);
+                }
+            }
+            
         }
         return $result;
     }

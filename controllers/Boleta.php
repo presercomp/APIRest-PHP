@@ -29,7 +29,9 @@ class BoletaController extends Controller {
                 Util::JSONResponse(Util::encodeResponse(200, $result));
             break;
             case "POST": 
-                echo "POST";
+                $result = $this->model->post();
+                $code = $result ? 201 : 400;
+                Util::JSONResponse(Util::encodeResponse($code, []));
             break;
             default:
                 Util::JSONResponse(Util::encodeResponse(404, [], "Metodo de solicitud no permitido {$this->HTTPMethod}"));

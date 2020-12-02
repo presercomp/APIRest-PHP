@@ -29,6 +29,18 @@ class BoletaModel extends Model{
             break;
         }
         return $result;
-        
+    }
+
+    public function post(){
+        $data = file_get_contents("php://input");
+        $data = json_decode($data, true);
+        if(isset($data['rut']) && isset($data['folio']) && isset($data['fecha']) && isset($data['monto'])){
+            $now = date("Y-m-d");
+            $sql = "INSERT INTO boleta VALUES (NULL, {$data['rut']}, {$data['folio']}, {$data['fecha']}, {$data['monto']}, '$now', NULL);";
+            $lid = $this->db->execute($sql);
+            return is_numeric($lid) && $lid > 0;
+        } else {
+            return false;
+        }
     }
 }
