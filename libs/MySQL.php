@@ -9,6 +9,7 @@ class MySQL{
     private $pdo;
     private $connected;
     private $errors;
+    private $rows;
 
     public function __construct(string $server, string $port, string $dbName, string $user, string $pass){
         $strConn = "mysql:host=$server;port=$port;dbname=$dbName;charset=utf8";
@@ -31,11 +32,17 @@ class MySQL{
             $sth = $this->pdo->prepare($sql);
             try {
                 $sth->execute();
+                $this->rows = $sth->rowCount();
             } catch(\PDOException $X_x){
                 $this->errors = $X_x->getMessage();
+                $this->rows = 0;
             }
             $result = $sth->fetchAll(PDO::FETCH_ASSOC);
         }
         return $result;
+    }
+
+    public function numRows(){
+        return $this->rows;
     }
 }
